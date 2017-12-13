@@ -1,0 +1,17 @@
+CLR,
+STO 5,
+STI 2,
+LOD 1,
+LDI 6,
+HLT,
+CLR,
+INP 10,
+OUP,
+JMP 6,
+SKP 2,
+ADD 70,
+SUB 39
+MUL 20,
+DIV 5,
+MOD 3,
+RND
