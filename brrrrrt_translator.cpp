@@ -270,7 +270,7 @@ string subtraction(int value)
 
 string multiplication(int value)
 { // Multiplies the accumulator by a number.
-  string instruction = "01111"; // Decimal = 14.
+  string instruction = "01101"; // Decimal = 14.
   instruction = instruction + data_pad(decimal_to_binary(value)) + "000";
   return instruction;
 }
