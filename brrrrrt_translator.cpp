@@ -18,7 +18,7 @@ string load(int reg_num);
 string load_indirect(int reg_num);
 string halt(); // does not require any data field.
 string clear(); // does not require any data field.
-string input(int value);
+string input(); // does not require any data field.
 string output(); // does not require any data field.
 string jump(int value);
 string skip(int value);
@@ -28,6 +28,8 @@ string multiplication(int value);
 string division(int value);
 string brrrrrt_modulus(int value);
 string brrrrrt_round();
+string add_indirect(int reg_num);
+string sub_indirect(int reg_num);
 
 int main()
 {
@@ -86,7 +88,7 @@ string readOpcode(string opcode, int vr) // Reads an opcode and adds interperets
   else if (opcode == "CLR")
     new_instruction = clear(); // clears all register values
   else if (opcode == "INP")
-    new_instruction = input(vr); // update reg 0 with user entered input.
+    new_instruction = input(); // update reg 0 with user entered input.
   else if (opcode == "OUP")
     new_instruction = output(); // displays the value currently in reg 0.
   else if (opcode == "JMP")
@@ -105,6 +107,10 @@ string readOpcode(string opcode, int vr) // Reads an opcode and adds interperets
     new_instruction = brrrrrt_modulus(vr); // the remainder of reg 0 after being divided by a number.
   else if (opcode == "RND")
     new_instruction = brrrrrt_round(); // rounds reg 0 to the nearest tenth.
+  else if (opcode == "ADI")
+    new_instruction = add_indirect(vr);
+  else if (opcode == "SBI")
+    new_instruction = sub_indirect(vr);
   else
     new_instruction = cout << "Invalid operation." << endl;
   return new_instruction;
@@ -215,10 +221,9 @@ string clear()
 
 
 
-string input(int value)
-{ // Stores a value in a register 0.
-  string instruction = "00111"; // Decimal = 7.
-  instruction = instruction + data_pad(decimal_to_binary(value)) + "000";
+string input()
+{ // Prompts input and stores a value in a register 0.
+  string instruction = "0011100000000000"; // Decimal = 7.
   return instruction;
 } // Returns the string with the instruction translated to binary.
 
@@ -293,8 +298,27 @@ string brrrrrt_modulus(int value)
   return instruction;
 }
 
+
+
 string brrrrrt_round()
 { // Rounds the value in the accumulator to the nearest 10th.
   string instruction = "1000000000000000"; // Decimal = 16.
+  return instruction;
+}
+
+
+string add_indirect(int reg_num)
+{ // Adds the value inside of the address of a register.
+  string instruction = "1000100000000"; // Decimal = 17.
+  instruction = instruction + reg_pad(decimal_to_binary(reg_num));
+  return instruction;
+}
+
+
+
+string sub_indirect(int reg_num)
+{ // Adds the value inside of the address of a register.
+  string instruction = "1001000000000"; // Decimal = 17.
+  instruction = instruction + reg_pad(decimal_to_binary(reg_num));
   return instruction;
 }

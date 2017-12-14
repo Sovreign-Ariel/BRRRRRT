@@ -31,5 +31,4 @@ SKP 0,
 LOD 4,
 SKP 0,
 JMP 13,
-LOD 6,
 OUP

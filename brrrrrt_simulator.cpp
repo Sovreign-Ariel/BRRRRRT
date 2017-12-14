@@ -60,7 +60,7 @@ int main()
     {
       dat_reg = binary_to_decimal(instruction.substr(13, 3));
       if (dat_reg > 7 || dat_reg < 0 || reg[dat_reg] > 255 || reg[dat_reg] < 0)
-        cout << "Error: invalid indirect address.\n\n";
+        cout << "Error: invalid indirect address in STI.\n\n";
       else
           memory_array[reg[dat_reg]] = reg[0];
     }
@@ -88,7 +88,9 @@ int main()
     }
     else if (opcode == "00111") // INP
     {
-      dat_reg = binary_to_decimal(instruction.substr(5, 8));
+      cout << "Please enter an integer value on the keyboard." << endl;
+      cin  >> dat_reg;
+      cout << endl;
       reg[0] = dat_reg;
     }
     else if (opcode == "01000") // OUP
@@ -98,7 +100,7 @@ int main()
     else if (opcode == "01001") // JMP
     {
       dat_reg = binary_to_decimal(instruction.substr(5, 8));
-      pc = pc - dat_reg;
+      pc = pc - (dat_reg + 1);
     }
     else if (opcode == "01010") // SKP
     {
@@ -150,6 +152,22 @@ int main()
         reg[0] = reg[0] + (10 - (reg[0]%10));
       else
         reg[0] = reg[0] - (reg[0]%10);
+    }
+    else if (opcode == "10001") // ADI
+    {
+      dat_reg = binary_to_decimal(instruction.substr(13, 3));
+      if (dat_reg > 7 || dat_reg < 0 || reg[dat_reg] > 255 || reg[dat_reg] < 0)
+        cout << "Error: invalid indirect address in ADI.\n\n";
+      else
+        reg[0] = reg[0] + memory_array[reg[dat_reg]];
+    }
+    else if (opcode == "10010") // ADI
+    {
+      dat_reg = binary_to_decimal(instruction.substr(13, 3));
+      if (dat_reg > 7 || dat_reg < 0 || reg[dat_reg] > 255 || reg[dat_reg] < 0)
+        cout << "Error: invalid indirect address.\n\n";
+      else
+        reg[0] = reg[0] - memory_array[reg[dat_reg]];
     }
   }
 
